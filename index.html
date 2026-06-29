@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres salir hoy? 😽</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffe6ea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .gif-container img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #4cc9f0;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            background-color: #4361ee;
+        }
+
+        .btn-option {
+            background-color: #ffccd5;
+            color: #ff4d6d;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-option:hover {
+            background-color: #ffb3c1;
+            transform: scale(1.02);
+        }
+
+        #btn-no {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        /* Estilos para los inputs */
+        input[type="time"] {
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #ffccd5;
+            border-radius: 10px;
+            color: #ff4d6d;
+            outline: none;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ffccd5;
+            border-radius: 10px;
+            width: 80%;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        /* Ocultar pantallas por defecto */
+        .pantalla {
+            display: none;
+        }
+
+        .activa {
+            display: block;
+        }
+
+        /* Corazón brillante animado */
+        .corazon-brillante {
+            font-size: 50px;
+            animation: latido 1.2s infinite alternate, brillos 0.8s infinite alternate;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        @keyframes latido {
+            to { transform: scale(1.15); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- PANTALLA 1: LA PREGUNTA INICIAL -->
+        <div id="pantalla1" class="pantalla activa">
+            <div class="gif-container">
+                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzBhMGo0bTNmaGx6NXZwN2N6d2Jsamk3bTZmYW15eGx3YTJrMDRqbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IheQZI0EbMu9vPWbcB/giphy.gif" alt="Cute gif">
+            </div>
+            <h1>Sabrosa, ¿Quieres salir conmigo hoy? 🥺</h1>
+            <div class="btn-container" style="height: 50px;">
+                <button id="btn-si" class="btn-primary" onclick="irAPantalla(2)">¡SÍ!</button>
+                <button id="btn-no" style="position: absolute;" onmouseover="moverBoton()" onclick="moverBoton()">NO</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 2: ELEGIR LA HORA -->
+        <div id="pantalla2" class="pantalla">
+            <div class="gif-container">
+                <img src="descargar.jpg" alt="Time gif">
+            </div>
+            <h1>jijiji 👼 ¿A qué hora paso por ti?</h1>
+            <input type="time" id="hora-input" value="17:00"><br>
+            <button class="btn-primary" onclick="guardarHora()">Siguiente</button>
+        </div>
+
+        <!-- PANTALLA 3: ELEGIR LA ACTIVIDAD -->
+        <div id="pantalla3" class="pantalla">
+            <div class="gif-container">
+                <img src="hamster.jpg" alt="Plan gif">
+            </div>
+            <h1>¿Y qué te gustaría que hacer? 🧌</h1>
+            <div class="btn-container">
+                <button class="btn-option" onclick="finalizar('ir a caminar')">Ir a caminar 🗺️</button>
+                <button class="btn-option" onclick="finalizar('comer un helado')">Comer un helado 🍦</button>
+                <button class="btn-option" onclick="finalizar('ir a una cafetería')">Ir a una cafetería ☕</button>
+                <button class="btn-option" onclick="finalizar('estar en mi casa')">Estar en mi casa 🏠</button>
+                <button class="btn-option" onclick="mostrarOtroInput()">Otro... 🤔</button>
+            </div>
+            
+            <!-- Input oculto que solo aparece si elige "Otro" -->
+            <div id="otro-container" style="display: none; margin-top: 15px;">
+                <input type="text" id="otro-input" placeholder="Escribe aquí qué quieres hacer..."><br>
+                <button class="btn-primary" onclick="finalizarOtro()">Confirmar Plan</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA FINAL: RESUMEN Y AMOR -->
+        <div id="pantalla-final" class="pantalla">
+            <div class="gif-container">
+                <img src="WhatsApp Image 2026-06-29 at 09.13.55.jpeg" alt="Happy gif">
+            </div>
+            <h1>Gracias por decir que sí, te amo preciosa💖</h1>
+            <p id="mensaje-resumen" style="font-weight: bold; font-size: 18px; color: #ff4d6d;"></p>
+            <div class="corazon-brillante">💋</div>
+        </div>
+
+    </div>
+
+    <script>
+        let horaElegida = "";
+        let planElegido = "";
+
+        function moverBoton() {
+            const btnNo = document.getElementById('btn-no');
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 20);
+            
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+        }
+
+        function irAPantalla(numero) {
+            // Ocultamos todas las pantallas
+            document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+            // Mostramos la pantalla deseada
+            document.getElementById('pantalla' + numero).classList.add('activa');
+        }
+
+        function guardarHora() {
+            const inputHora = document.getElementById('hora-input').value;
+            if(!inputHora) {
+                alert("¡Por favor elige una hora bonita! 😊");
+                return;
+            }
+            horaElegida = inputHora;
+            irAPantalla(3); // Pasar a elegir actividad
+        }
+
+        function mostrarOtroInput() {
+            document.getElementById('otro-container').style.display = 'block';
+        }
+
+        function finalizarOtro() {
+            const textoOtro = document.getElementById('otro-input').value.trim();
+            if(textoOtro === "") {
+                alert("Escribe algo que quieras hacer o elige una opción de arriba de las de arriba ❤️");
+                return;
+            }
+            finalizar(textoOtro);
+        }
+
+        function finalizar(actividad) {
+            planElegido = actividad;
+            
+            // Ocultamos pantalla de planes y mostramos la final
+            document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+            document.getElementById('pantalla-final').classList.add('activa');
+            
+            // Construimos el mensaje personalizado dinámicamente
+            const mensajeFinal = `Paso por ti a las ${horaElegida} para ${planElegido}.`;
+            document.getElementById('mensaje-resumen').innerText = mensajeFinal;
+        }
+    </script>
+</body>
+</html>
